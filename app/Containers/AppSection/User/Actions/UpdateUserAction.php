@@ -27,7 +27,7 @@ class UpdateUserAction extends Action
         try {
             $dataToUpdate = [
                 'f_name' => $userValue->getFName(),
-                'm_name' => $userValue->getMName() ?? "",
+                'm_name' => $userValue->getMName(),
                 'l_name' => $userValue->getLName(),
                 'birthday' => $userValue->getBirthday(),
                 'email' => $userValue->getEmail(),

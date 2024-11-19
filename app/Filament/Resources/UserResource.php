@@ -7,10 +7,14 @@ use App\Filament\Resources\UserResource\RelationManagers;
 use App\Containers\AppSection\User\Models\User;
 //use App\Models\User;
 use Filament\Forms;
+use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\TextInput;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
+use Hash;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Storage;
@@ -25,7 +29,40 @@ class UserResource extends Resource
     {
         return $form
             ->schema([
-                //
+                    TextInput::make('f_name')
+                        ->string()
+                        ->required()
+                        ->label('Имя'),
+
+                    TextInput::make('l_name')
+                        ->string()
+                        ->required()
+                        ->label('Фамилия'),
+
+                    TextInput::make('m_name')
+                        ->string()
+                        ->nullable()
+                        ->label('Отчество'),
+
+                    TextInput::make('password')
+                        ->required()
+                        ->password()
+                        ->minValue(4)
+                        ->dehydrateStateUsing(fn($state) => Hash::make($state))
+                        ->label('Пароль'),
+
+                    TextInput::make('email')
+                        ->required()
+                        ->email()
+                        ->label('Email'),
+
+                    DatePicker::make('birthday')
+                        ->required()
+                        ->before(today())
+                        ->label('Дата рождения'),
+
+                    FileUpload::make('image')
+                        ->label('Изображение'),
             ]);
     }
 
@@ -63,8 +100,6 @@ class UserResource extends Resource
     {
         return [
             'index' => Pages\ListUsers::route('/'),
-            'create' => Pages\CreateUser::route('/create'),
-            'edit' => Pages\EditUser::route('/{record}/edit'),
         ];
     }
 }

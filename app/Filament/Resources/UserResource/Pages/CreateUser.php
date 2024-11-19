@@ -37,7 +37,7 @@ class CreateUser extends CreateRecord
                 ->required()
                 ->password()
                 ->minValue(4)
-                ->dehydrateStateUsing(fn ($state) => Hash::make($state))
+                ->dehydrateStateUsing(fn($state) => Hash::make($state))
                 ->label('Пароль'),
 
             TextInput::make('email')

@@ -20,7 +20,7 @@ class DeleteUserTask extends Task
     public function run(User $user): ?int
     {
         try {
-            return $this->repository->delete($user->id);
+            return $this->repository->delete($user->getKey());
         } catch (Exception $exception) {
             throw new DeleteResourceFailedException();
         }

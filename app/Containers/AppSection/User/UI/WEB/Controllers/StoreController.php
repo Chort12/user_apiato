@@ -21,7 +21,7 @@ class StoreController extends WebController
 {
     public function create(StoreRequest $request)
     {
-        $pass = Hash::make($request['password']);
+        $pass = Hash::make($request->password);
         $userValue = (new UserValue)
             ->setFName($request->f_name)
             ->setLName($request->l_name)
